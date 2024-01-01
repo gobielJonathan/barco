@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barcon Preview</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!-- constants -->
+    <script type="text/babel">
+      const MONTH_MAPS = {
+        "01": "Januari",
+        "02": "Februari",
+        "03": "Maret",
+        "04": "April",
+        "05": "Mei",
+        "06": "Juni",
+        "07": "Juli",
+        "08": "Agustus",
+        "09": "September",
+        10: "Oktober",
+        11: "November",
+        12: "Desember",
+      };
+
+      const WORKS_DETAIL = [
+        { key: "bobot_pekerjaan_persiapan", label: "Pekerjaan Persiapan" },
+        {
+          key: "bobot_pekerjaan_galian_tanah",
+          label: "Pekerjaan Galian Tanah",
+        },
+        { key: "bobot_pekerjaan_fondasi", label: "Pekerjaan Fondasi" },
+        {
+          key: "bobot_pekerjaan_cor_beton_pile_cap",
+          label: "Pekerjaan Cor Beton Pile Cap",
+        },
+        {
+          key: "bobot_pekerjaan_cor_beton_slug",
+          label: "Pekerjaan Cor Beton Slug",
+        },
+        {
+          key: "bobot_pekerjaan_pelat_beton_lantai",
+          label: "Pekerjaan Pelan Beton Lantai",
+        },
+        { key: "bobot_pekerjaan_pelat_bawah", label: "Pekerjaan Pelat Bawah" },
+        { key: "bobot_pekerjaan_dinding", label: "Pekerjaan Dinding" },
+        {
+          key: "bobot_pekerjaan_konstruksi_baja",
+          label: "Pekerjaan Konstruksi Baja",
+        },
+        { key: "bobot_pekerjaan_penutup", label: "Pekerjaan Penutup" },
+      ];
+    </script>
+
+    <!-- data source -->
+    <script type="text/babel">
+      //PLEASE PUT YOUR DATA HERE
+      const data = {
+        nama_proyek: "PIK",
+        Bobot: {
+          bobot_pekerjaan: {
+            bobot_pekerjaan_persiapan: 42.0,
+            bobot_pekerjaan_galian_tanah: 0.0,
+            bobot_pekerjaan_fondasi: 0.0,
+            bobot_pekerjaan_cor_beton_pile_cap: 0.0,
+            bobot_pekerjaan_cor_beton_slug: 0.0,
+            bobot_pekerjaan_pelat_beton_lantai: 6.0,
+            bobot_pekerjaan_pelat_bawah: 47.0,
+            bobot_pekerjaan_dinding: 6.0,
+            bobot_pekerjaan_konstruksi_baja: 0.0,
+            bobot_pekerjaan_penutup: 0.0,
+          },
+        },
+        tanggal: [
+          "01-01",
+          "08-01",
+
+          "29-02",
+
+          "01-03",
+          "01-04",
+
+          "01-05",
+
+          "01-11",
+
+          "13-12",
+        ],
+        bobot_per_week: { "01-11": [5.5, 3.33], "13-12": [3.12, 8.29] },
+        bobot_aktual_realisasi: [3.0, 5.0, 4.0, 2.5, 1.3, "None", "None"],
+      };
+    </script>
+
+    <!-- data manipulation -->
+    <script type="text/babel">
+      const months = data.tanggal.reduce((curr, item) => {
+        const monthName = MONTH_MAPS[item.split("-")[1]];
+        return { ...curr, [monthName]: [...(curr[monthName] || []), item] };
+      }, {});
+
+      const baseRelasation = [
+        ...data.bobot_aktual_realisasi.filter((d) => d && d !== "None"),
+      ];
+
+      const groupDateRangeByMonth = data.tanggal.reduce((curr, item) => {
+        const monthName = item.split("-")[1];
+        return { ...curr, [monthName]: [...(curr[monthName] || []), item] };
+      }, {});
+
+      const realisations = Object.values(months).reduce(
+        (curr, dateRange) =>
+          curr.concat([baseRelasation.splice(0, dateRange.length)]),
+        []
+      );
+
+      const groupRelisasiAkumulatifPerDateRangeMonth = realisations.map(
+        (dArr, dArrIdx) => {
+          let prev = dArrIdx > 0 ? realisations[dArrIdx - 1].at(-1) : 0;
+
+          return dArr.map((d, dIdx) => {
+            if (dIdx > 0) {
+              prev += dArr.at(dIdx - 1);
+            }
+            if (d === 0) {
+              return 0;
+            }
+            return d + prev;
+          });
+        }
+      );
+
+      const groupBobotPerWorkDetail = WORKS_DETAIL.map((_, idx) => {
+        return Object.entries(months).map(([month, dateMonth]) => {
+          return dateMonth.map((date) =>
+            data.bobot_per_week[date]
+              ? data.bobot_per_week[date].at(idx)
+              : undefined
+          );
+        });
+      });
+
+      const groupBobotRencanaPerDateRangeMonth = Object.values(months).map(
+        (dateRange, rangeIdx) => {
+          return dateRange.map((_, dateIdx) =>
+            WORKS_DETAIL.reduce((curr, _, idx) => {
+              return (
+                curr + (groupBobotPerWorkDetail[idx][rangeIdx][dateIdx] || 0)
+              );
+            }, 0)
+          );
+        }
+      );
+
+      const groupBobotRencanaAkumulatifPerDateRangeMonth =
+        groupBobotRencanaPerDateRangeMonth.map((dArr, dArrIdx) => {
+          let prev =
+            dArrIdx > 0
+              ? groupBobotRencanaPerDateRangeMonth[dArrIdx - 1].at(-1)
+              : 0;
+
+          return dArr.map((d, dIdx) => {
+            if (dIdx > 0) {
+              prev += dArr.at(dIdx - 1);
+            }
+            if (d === 0) {
+              return 0;
+            }
+            return d + prev;
+          });
+        });
+
+      const deviasi = groupBobotRencanaAkumulatifPerDateRangeMonth.map(
+        (bobotDateMonths, monthIdx) => {
+          return bobotDateMonths.map(
+            (bobot, idx) =>
+              (groupRelisasiAkumulatifPerDateRangeMonth[monthIdx][idx] || 0) -
+              bobot
+          );
+        }
+      );
+    </script>
+
+    <!-- utilities -->
+    <script>
+      function formatString(template, ...values) {
+        return template.replace(/{(\d+)}/g, (match, index) => {
+          return values[index] !== undefined ? values[index] : match;
+        });
+      }
+
+      const innerDimensions = (node) => {
+        var computedStyle = getComputedStyle(node);
+
+        let width = node.clientWidth; // width with padding
+        let height = node.clientHeight; // height with padding
+
+        height -=
+          parseFloat(computedStyle.paddingTop) +
+          parseFloat(computedStyle.paddingBottom);
+        width -=
+          parseFloat(computedStyle.paddingLeft) +
+          parseFloat(computedStyle.paddingRight);
+        return { height, width };
+      };
+    </script>
+
+    <!-- for init render app -->
+    <script src="./app.js" type="text/babel"></script>
+  </body>
+</html>

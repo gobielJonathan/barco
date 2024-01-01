@@ -1,0 +1,46 @@
+table {
+  --label-width: 100px;
+  --bobot-width: 60px;
+
+  td {
+    line-height: 15px;
+    z-index: 1;
+  }
+
+  .fixed-col {
+    position: sticky;
+    left: 0;
+    top: 0;
+    padding: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    z-index: 2;
+  }
+
+  .col-detail-label {
+    border-bottom: 0;
+
+    & .label {
+      padding: 0.5rem;
+      width: var(--label-width);
+    }
+  }
+
+  .col-detail-bobot {
+    left: 100px;
+
+    & .label {
+      padding: 0.5rem;
+      width: var(--bobot-width);
+    }
+  }
+
+  .col-bobot {
+    vertical-align: middle;
+
+    & .label {
+      padding: 0.5rem;
+      width: calc(var(--bobot-width) + var(--label-width));
+    }
+  }
+}
