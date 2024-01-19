@@ -286,8 +286,8 @@ function Chart_() {
       data: chartData,
 
       options: {
-        height: 100,
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: false,
@@ -319,19 +319,22 @@ function Chart_() {
     };
 
     Chart.defaults.color = "#000";
+    Chart.defaults.font.size = 10;
     new Chart(canvas.current, config);
   }, []);
 
   return (
-    <canvas
-      style={{
-        backgroundImage:
-          "linear-gradient(180deg, rgba(0, 111, 164, 0.40) 0%, rgba(96, 154, 182, 0.16) 100%)",
-        borderRadius: 15,
-        padding: 10,
-      }}
-      ref={canvas}
-    ></canvas>
+    <div style={{ height: 230 }}>
+      <canvas
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(0, 111, 164, 0.40) 0%, rgba(96, 154, 182, 0.16) 100%)",
+          borderRadius: 15,
+          padding: 10,
+        }}
+        ref={canvas}
+      ></canvas>
+    </div>
   );
 }
 
@@ -348,7 +351,12 @@ function App() {
     <div ref={container} class="container-md py-4">
       <div class="row">
         <div class="col-5">
-          <img src="./logo.png" alt="logo" class="mb-4" />
+          <img
+            src="./logo.png"
+            alt="logo"
+            class="mb-4"
+            style={{ height: 40 }}
+          />
 
           <div class="text-center">
             <h3 class="display-5">
@@ -363,8 +371,7 @@ function App() {
             class="rounded p-4 mx-auto my-5"
             style={{
               backgroundColor: "rgba(96, 154, 182, 0.4)",
-              width: 242,
-              height: 110,
+              width: 150,
             }}
           >
             <div class="d-flex align-items-center">

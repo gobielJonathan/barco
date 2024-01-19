@@ -79,7 +79,7 @@
     <!-- data source -->
     <script type="text/babel">
       //PLEASE PUT YOUR DATA HERE
-      const data = {}; //PUT YOUR DATA HERE
+      const data = "{{  python_variable  }}";
 
       // const data = {
       //   nama_proyek: "PIK",
@@ -222,20 +222,24 @@
         (acc, bobot) => acc + bobot,
         0
       );
+
       const months = Object.keys(data.bobot_per_week).reduce((acc, data) => {
         const [_, month] = data.split("-");
-        if (!acc[month]) return { ...acc, [month]: [data] };
+        const key = MONTH_MAPS[month];
+        if (!acc[key]) return { ...acc, [key]: [data] };
         return {
           ...acc,
-          [month]: acc[month].concat(data).sort((a, b) => a.localeCompare(b)),
+          [key]: acc[key].concat(data).sort((a, b) => a.localeCompare(b)),
         };
       }, {});
+
+      const allMonths = Object.keys(months).sort((a, b) => a.localeCompare(b));
 
       const allDates = Object.values(months).flat(3);
 
       const groupBobotPerWorkDetail = WORKS_DETAIL.map((detail) => {
         const bobotPercentage = Object.entries(months).reduce(
-          (acc, [month, dates]) => {
+          (acc, [_, dates]) => {
             return acc.concat([
               dates.map((date) => data.bobot_per_week[date][detail.key]),
             ]);
@@ -247,10 +251,12 @@
       });
 
       const groupBobotRencanaPerWorkDetail = Object.entries(months).reduce(
-        (acc, [month, dates]) => {
+        (acc, [_, dates]) => {
           return acc.concat([
-            dates.map(
-              (date) => data.bobot_aktual_realisasi[date].bobot_rencana
+            dates.map((date) =>
+              data.bobot_aktual_realisasi[date]
+                ? data.bobot_aktual_realisasi[date].bobot_rencana
+                : 0
             ),
           ]);
         },
@@ -268,10 +274,12 @@
 
       const groupBobotAktualRealisasiPerWorkDetail = Object.entries(
         months
-      ).reduce((acc, [month, dates]) => {
+      ).reduce((acc, [_, dates]) => {
         return acc.concat([
-          dates.map(
-            (date) => data.bobot_aktual_realisasi[date].bobot_aktual_realisasi
+          dates.map((date) =>
+            data.bobot_aktual_realisasi[date]
+              ? data.bobot_aktual_realisasi[date].bobot_aktual_realisasi
+              : 0
           ),
         ]);
       }, []);

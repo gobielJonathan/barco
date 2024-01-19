@@ -1,46 +1,54 @@
+* {
+  font-size: 10px;
+}
+
 table {
-  --label-width: 100px;
-  --bobot-width: 60px;
+  --label-width: 200px;
+  --bobot-width: 100%;
+}
 
-  td {
-    line-height: 15px;
-    z-index: 1;
-  }
+table td,
+table th {
+  line-height: 8px;
+  z-index: 1;
+}
 
-  .fixed-col {
-    position: sticky;
-    left: 0;
-    top: 0;
-    padding: 0;
-    background-color: white;
-    border: 1px solid #ddd;
-    z-index: 2;
-  }
+table .fixed-col {
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  z-index: 2;
+}
 
-  .col-detail-label {
-    border-bottom: 0;
+table .col-detail-label {
+  border-bottom: 0;
+  width: 25%;
+}
 
-    & .label {
-      padding: 0.5rem;
-      width: var(--label-width);
-    }
-  }
+table .col-detail-label .label {
+  padding: 0.5rem;
+  width: var(--label-width);
+  text-align: left;
+}
 
-  .col-detail-bobot {
-    left: 100px;
+table .col-detail-bobot {
+  left: 25%;
+  width: 18%;
+}
 
-    & .label {
-      padding: 0.5rem;
-      width: var(--bobot-width);
-    }
-  }
+table .col-detail-bobot .label {
+  padding: 0.5rem;
+  width: var(--bobot-width);
+}
 
-  .col-bobot {
-    vertical-align: middle;
+table .col-bobot {
+  vertical-align: middle;
+}
 
-    & .label {
-      padding: 0.5rem;
-      width: calc(var(--bobot-width) + var(--label-width));
-    }
-  }
+table .col-bobot .label {
+  padding: 0.5rem;
+  width: calc(var(--bobot-width) + var(--label-width));
 }
