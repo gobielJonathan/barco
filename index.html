@@ -79,127 +79,220 @@
     <!-- data source -->
     <script type="text/babel">
       //PLEASE PUT YOUR DATA HERE
-      const data = {
-        nama_proyek: "PIK",
-        Bobot: {
-          bobot_pekerjaan: {
-            bobot_pekerjaan_persiapan: 42.0,
-            bobot_pekerjaan_galian_tanah: 0.0,
-            bobot_pekerjaan_fondasi: 0.0,
-            bobot_pekerjaan_cor_beton_pile_cap: 0.0,
-            bobot_pekerjaan_cor_beton_slug: 0.0,
-            bobot_pekerjaan_pelat_beton_lantai: 6.0,
-            bobot_pekerjaan_pelat_bawah: 47.0,
-            bobot_pekerjaan_dinding: 6.0,
-            bobot_pekerjaan_konstruksi_baja: 0.0,
-            bobot_pekerjaan_penutup: 0.0,
-          },
-        },
-        tanggal: [
-          "01-01",
-          "08-01",
+      const data = {}; //PUT YOUR DATA HERE
 
-          "29-02",
-
-          "01-03",
-          "01-04",
-
-          "01-05",
-
-          "01-11",
-
-          "13-12",
-        ],
-        bobot_per_week: { "01-11": [5.5, 3.33], "13-12": [3.12, 8.29] },
-        bobot_aktual_realisasi: [3.0, 5.0, 4.0, 2.5, 1.3, "None", "None"],
-      };
+      // const data = {
+      //   nama_proyek: "PIK",
+      //   bobot: {
+      //     bobot_pekerjaan: {
+      //       bobot_pekerjaan_persiapan: 41.96,
+      //       bobot_pekerjaan_galian_tanah: 0.0,
+      //       bobot_pekerjaan_fondasi: 0.04,
+      //       bobot_pekerjaan_cor_beton_pile_cap: 0.0,
+      //       bobot_pekerjaan_cor_beton_slug: 0.0,
+      //       bobot_pekerjaan_pelat_beton_lantai: 5.67,
+      //       bobot_pekerjaan_pelat_bawah: 46.52,
+      //       bobot_pekerjaan_dinding: 6.0,
+      //       bobot_pekerjaan_konstruksi_baja: 0.0,
+      //       bobot_pekerjaan_penutup: 0.0,
+      //     },
+      //   },
+      //   bobot_per_week: {
+      //     "22-11": {
+      //       bobot_pekerjaan_persiapan: null,
+      //       bobot_pekerjaan_galian_tanah: null,
+      //       bobot_pekerjaan_fondasi: null,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //     "29-11": {
+      //       bobot_pekerjaan_persiapan: null,
+      //       bobot_pekerjaan_galian_tanah: null,
+      //       bobot_pekerjaan_fondasi: null,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //     "01-11": {
+      //       bobot_pekerjaan_persiapan: 5.0,
+      //       bobot_pekerjaan_galian_tanah: 10.0,
+      //       bobot_pekerjaan_fondasi: 20.0,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //     "08-11": {
+      //       bobot_pekerjaan_persiapan: 10.0,
+      //       bobot_pekerjaan_galian_tanah: 21.0,
+      //       bobot_pekerjaan_fondasi: 20.0,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //     "15-11": {
+      //       bobot_pekerjaan_persiapan: 8.0,
+      //       bobot_pekerjaan_galian_tanah: 8.5,
+      //       bobot_pekerjaan_fondasi: 3.2,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //     "06-12": {
+      //       bobot_pekerjaan_persiapan: 2.0,
+      //       bobot_pekerjaan_galian_tanah: null,
+      //       bobot_pekerjaan_fondasi: null,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //     "13-12": {
+      //       bobot_pekerjaan_persiapan: null,
+      //       bobot_pekerjaan_galian_tanah: null,
+      //       bobot_pekerjaan_fondasi: null,
+      //       bobot_pekerjaan_cor_beton_pile_cap: null,
+      //       bobot_pekerjaan_cor_beton_slug: null,
+      //       bobot_pekerjaan_pelat_beton_lantai: null,
+      //       bobot_pekerjaan_pelat_bawah: null,
+      //       bobot_pekerjaan_dinding: null,
+      //       bobot_pekerjaan_konstruksi_baja: null,
+      //       bobot_pekerjaan_penutup: null,
+      //     },
+      //   },
+      //   bobot_aktual_realisasi: {
+      //     "08-11": {
+      //       bobot_rencana: 51.0,
+      //       bobot_aktual_realisasi: 52.0,
+      //     },
+      //     "06-12": {
+      //       bobot_rencana: null,
+      //       bobot_aktual_realisasi: null,
+      //     },
+      //     "13-12": {
+      //       bobot_rencana: null,
+      //       bobot_aktual_realisasi: null,
+      //     },
+      //     "01-11": {
+      //       bobot_rencana: 35.0,
+      //       bobot_aktual_realisasi: 30.0,
+      //     },
+      //     "15-11": {
+      //       bobot_rencana: 19.7,
+      //       bobot_aktual_realisasi: 24.0,
+      //     },
+      //     "22-11": {
+      //       bobot_rencana: 0.0,
+      //       bobot_aktual_realisasi: 22.5,
+      //     },
+      //     "29-11": {
+      //       bobot_rencana: 0.0,
+      //       bobot_aktual_realisasi: 14.0,
+      //     },
+      //   },
+      // };
     </script>
 
     <!-- data manipulation -->
     <script type="text/babel">
-      const months = data.tanggal.reduce((curr, item) => {
-        const monthName = MONTH_MAPS[item.split("-")[1]];
-        return { ...curr, [monthName]: [...(curr[monthName] || []), item] };
+      const totalBobot = Object.values(data.bobot.bobot_pekerjaan).reduce(
+        (acc, bobot) => acc + bobot,
+        0
+      );
+      const months = Object.keys(data.bobot_per_week).reduce((acc, data) => {
+        const [_, month] = data.split("-");
+        if (!acc[month]) return { ...acc, [month]: [data] };
+        return {
+          ...acc,
+          [month]: acc[month].concat(data).sort((a, b) => a.localeCompare(b)),
+        };
       }, {});
 
-      const baseRelasation = [
-        ...data.bobot_aktual_realisasi.filter((d) => d && d !== "None"),
-      ];
+      const allDates = Object.values(months).flat(3);
 
-      const groupDateRangeByMonth = data.tanggal.reduce((curr, item) => {
-        const monthName = item.split("-")[1];
-        return { ...curr, [monthName]: [...(curr[monthName] || []), item] };
-      }, {});
+      const groupBobotPerWorkDetail = WORKS_DETAIL.map((detail) => {
+        const bobotPercentage = Object.entries(months).reduce(
+          (acc, [month, dates]) => {
+            return acc.concat([
+              dates.map((date) => data.bobot_per_week[date][detail.key]),
+            ]);
+          },
+          []
+        );
 
-      const realisations = Object.values(months).reduce(
-        (curr, dateRange) =>
-          curr.concat([baseRelasation.splice(0, dateRange.length)]),
+        return bobotPercentage;
+      });
+
+      const groupBobotRencanaPerWorkDetail = Object.entries(months).reduce(
+        (acc, [month, dates]) => {
+          return acc.concat([
+            dates.map(
+              (date) => data.bobot_aktual_realisasi[date].bobot_rencana
+            ),
+          ]);
+        },
         []
       );
 
-      const groupRelisasiAkumulatifPerDateRangeMonth = realisations.map(
-        (dArr, dArrIdx) => {
-          let prev = dArrIdx > 0 ? realisations[dArrIdx - 1].at(-1) : 0;
-
-          return dArr.map((d, dIdx) => {
-            if (dIdx > 0) {
-              prev += dArr.at(dIdx - 1);
-            }
-            if (d === 0) {
-              return 0;
-            }
-            return d + prev;
-          });
-        }
-      );
-
-      const groupBobotPerWorkDetail = WORKS_DETAIL.map((_, idx) => {
-        return Object.entries(months).map(([month, dateMonth]) => {
-          return dateMonth.map((date) =>
-            data.bobot_per_week[date]
-              ? data.bobot_per_week[date].at(idx)
-              : undefined
-          );
-        });
-      });
-
-      const groupBobotRencanaPerDateRangeMonth = Object.values(months).map(
-        (dateRange, rangeIdx) => {
-          return dateRange.map((_, dateIdx) =>
-            WORKS_DETAIL.reduce((curr, _, idx) => {
-              return (
-                curr + (groupBobotPerWorkDetail[idx][rangeIdx][dateIdx] || 0)
-              );
-            }, 0)
-          );
-        }
-      );
-
-      const groupBobotRencanaAkumulatifPerDateRangeMonth =
-        groupBobotRencanaPerDateRangeMonth.map((dArr, dArrIdx) => {
-          let prev =
-            dArrIdx > 0
-              ? groupBobotRencanaPerDateRangeMonth[dArrIdx - 1].at(-1)
-              : 0;
-
-          return dArr.map((d, dIdx) => {
-            if (dIdx > 0) {
-              prev += dArr.at(dIdx - 1);
-            }
-            if (d === 0) {
-              return 0;
-            }
-            return d + prev;
+      let prevBobotRencana = 0;
+      const groupBobotRencanaAkumulatifPerWorkDetail =
+        groupBobotRencanaPerWorkDetail.map((rates) => {
+          return rates.map((rate) => {
+            if (!rate) return 0;
+            return (prevBobotRencana += rate);
           });
         });
 
-      const deviasi = groupBobotRencanaAkumulatifPerDateRangeMonth.map(
-        (bobotDateMonths, monthIdx) => {
-          return bobotDateMonths.map(
-            (bobot, idx) =>
-              (groupRelisasiAkumulatifPerDateRangeMonth[monthIdx][idx] || 0) -
-              bobot
-          );
+      const groupBobotAktualRealisasiPerWorkDetail = Object.entries(
+        months
+      ).reduce((acc, [month, dates]) => {
+        return acc.concat([
+          dates.map(
+            (date) => data.bobot_aktual_realisasi[date].bobot_aktual_realisasi
+          ),
+        ]);
+      }, []);
+
+      let prevBobotAktualRealisasi = 0;
+      const groupBobotAktualKumulatifPerWorkDetail =
+        groupBobotAktualRealisasiPerWorkDetail.map((rates) => {
+          return rates.map((rate) => {
+            if (!rate) return 0;
+            return (prevBobotAktualRealisasi += rate);
+          });
+        });
+
+      const deviasi = groupBobotAktualKumulatifPerWorkDetail.map(
+        (rates, detailIdx) => {
+          return rates.map((rate, idx) => {
+            const rencana =
+              groupBobotRencanaAkumulatifPerWorkDetail[detailIdx][idx];
+            if (!rate || !rencana) return 0;
+            return Math.abs(Math.ceil(rate - rencana));
+          });
         }
       );
     </script>

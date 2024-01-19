@@ -26,7 +26,7 @@ function Table() {
                 class="d-grid"
                 style={{
                   gridTemplateColumns: formatString(
-                    "repeat({0},60px)",
+                    "repeat({0},1fr)",
                     dateRange.length
                   ),
                 }}
@@ -50,7 +50,7 @@ function Table() {
                 class="d-grid"
                 style={{
                   gridTemplateColumns: formatString(
-                    "repeat({0},60px)",
+                    "repeat({0},1fr)",
                     dateRange.length
                   ),
                 }}
@@ -70,7 +70,7 @@ function Table() {
             </td>
             <td class="fixed-col col-detail-bobot">
               <div class="text-center label">
-                {data.Bobot.bobot_pekerjaan[detail.key]}%
+                {data.bobot.bobot_pekerjaan[detail.key]}%
               </div>
             </td>
             {groupBobotPerWorkDetail.at(detailIdx).map((detail) => (
@@ -79,7 +79,7 @@ function Table() {
                   class="d-grid"
                   style={{
                     gridTemplateColumns: formatString(
-                      "repeat({0}, 60px)",
+                      "repeat({0}, 1fr)",
                       detail.length
                     ),
                   }}
@@ -100,47 +100,39 @@ function Table() {
             <div class="label">Total (%)</div>
           </td>
           <td class="text-center fixed-col col-detail-bobot">
-            <div class="label">
-              {WORKS_DETAIL.reduce(
-                (curr, detail) => curr + data.Bobot.bobot_pekerjaan[detail.key],
-                0
-              )}
-              %
-            </div>
+            <div class="label">{totalBobot}%</div>
           </td>
-          {groupBobotRencanaAkumulatifPerDateRangeMonth.map((dArr, dArrIdx) => {
-            return (
-              <td>
-                <tr
-                  class="d-grid"
-                  style={{
-                    gridTemplateColumns: formatString(
-                      "repeat({0}, 60px)",
-                      dArr.length
-                    ),
-                  }}
-                >
-                  {dArr.map((d) => {
-                    return <td />;
-                  })}
-                </tr>
-              </td>
-            );
-          })}
+          {groupBobotPerWorkDetail.at(0).map((detail) => (
+            <td>
+              <tr
+                class="d-grid"
+                style={{
+                  gridTemplateColumns: formatString(
+                    "repeat({0}, 1fr)",
+                    detail.length
+                  ),
+                }}
+              >
+                {detail.map((d) => (
+                  <td />
+                ))}
+              </tr>
+            </td>
+          ))}
         </tr>
 
         <tr>
           <td colspan="2" class="fw-bold fixed-col col-bobot">
             <div class="label">Bobot Rencana</div>
           </td>
-          {Object.entries(groupBobotRencanaPerDateRangeMonth).map(
+          {Object.entries(groupBobotRencanaPerWorkDetail).map(
             ([_, percentages]) => (
               <td>
                 <tr
                   class="d-grid"
                   style={{
                     gridTemplateColumns: formatString(
-                      "repeat({0},60px)",
+                      "repeat({0},1fr)",
                       percentages.length
                     ),
                   }}
@@ -159,105 +151,104 @@ function Table() {
           <td colspan="2" class="fw-bold fixed-col col-bobot">
             <div class="label">Bobot Rencana Akumulatif</div>
           </td>
-          {groupBobotRencanaAkumulatifPerDateRangeMonth.map((dArr, dArrIdx) => {
-            return (
+          {Object.entries(groupBobotRencanaAkumulatifPerWorkDetail).map(
+            ([_, percentages]) => (
               <td>
                 <tr
                   class="d-grid"
                   style={{
                     gridTemplateColumns: formatString(
-                      "repeat({0}, 60px)",
-                      dArr.length
+                      "repeat({0},1fr)",
+                      percentages.length
                     ),
                   }}
                 >
-                  {dArr.map((d) => {
-                    if (!d) {
-                      return <td />;
-                    }
-                    return <td class="text-center">{Math.ceil(d)}%</td>;
-                  })}
+                  {percentages.map((date) => (
+                    <td class="text-center">
+                      {Boolean(date) && formatString("{0}%", date)}
+                    </td>
+                  ))}
                 </tr>
               </td>
-            );
-          })}
+            )
+          )}
         </tr>
         <tr>
           <td colspan="2" class="fw-bold fixed-col col-bobot">
             <div class="label">Bobot Aktual</div>
           </td>
-          {realisations.map((dArr) => (
-            <td>
-              <tr
-                class="d-grid"
-                style={{
-                  gridTemplateColumns: formatString(
-                    "repeat({0}, 60px)",
-                    dArr.length
-                  ),
-                }}
-              >
-                {dArr.map((d) => (
-                  <td class="text-center">{d}%</td>
-                ))}
-              </tr>
-            </td>
-          ))}
-        </tr>
-        <tr>
-          <td colspan="2" class="fw-bold fixed-col col-bobot">
-            <div class="label">Bobot Aktual Akumulatif</div>
-          </td>
-          {groupRelisasiAkumulatifPerDateRangeMonth.map((dArr, dArrIdx) => {
-            return (
+          {Object.entries(groupBobotAktualRealisasiPerWorkDetail).map(
+            ([_, percentages]) => (
               <td>
                 <tr
                   class="d-grid"
                   style={{
                     gridTemplateColumns: formatString(
-                      "repeat({0}, 60px)",
-                      dArr.length
+                      "repeat({0},1fr)",
+                      percentages.length
                     ),
                   }}
                 >
-                  {dArr.map((d) => {
-                    if (d === 0) {
-                      return <td />;
-                    }
-                    return <td class="text-center">{d}%</td>;
-                  })}
+                  {percentages.map((date) => (
+                    <td class="text-center">
+                      {Boolean(date) && formatString("{0}%", date)}
+                    </td>
+                  ))}
                 </tr>
               </td>
-            );
-          })}
+            )
+          )}
+        </tr>
+        <tr>
+          <td colspan="2" class="fw-bold fixed-col col-bobot">
+            <div class="label">Bobot Aktual Akumulatif</div>
+          </td>
+          {Object.entries(groupBobotAktualKumulatifPerWorkDetail).map(
+            ([_, percentages]) => (
+              <td>
+                <tr
+                  class="d-grid"
+                  style={{
+                    gridTemplateColumns: formatString(
+                      "repeat({0},1fr)",
+                      percentages.length
+                    ),
+                  }}
+                >
+                  {percentages.map((date) => (
+                    <td class="text-center">
+                      {Boolean(date) && formatString("{0}%", date)}
+                    </td>
+                  ))}
+                </tr>
+              </td>
+            )
+          )}
         </tr>
         <tr>
           <td colspan="2" class="fw-bold fixed-col col-bobot">
             <div class="label">Nilai Deviasi</div>
           </td>
 
-          {deviasi.map((dArr) => {
-            return (
-              <td>
-                <tr
-                  class="d-grid"
-                  style={{
-                    gridTemplateColumns: formatString(
-                      "repeat({0}, 60px)",
-                      dArr.length
-                    ),
-                  }}
-                >
-                  {dArr.map((d) => {
-                    if (!d) {
-                      return <td />;
-                    }
-                    return <td class="text-center">{Math.ceil(d)}%</td>;
-                  })}
-                </tr>
-              </td>
-            );
-          })}
+          {Object.entries(deviasi).map(([_, percentages]) => (
+            <td>
+              <tr
+                class="d-grid"
+                style={{
+                  gridTemplateColumns: formatString(
+                    "repeat({0},1fr)",
+                    percentages.length
+                  ),
+                }}
+              >
+                {percentages.map((date) => (
+                  <td class="text-center">
+                    {Boolean(date) && formatString("{0}%", date)}
+                  </td>
+                ))}
+              </tr>
+            </td>
+          ))}
         </tr>
       </tbody>
     </table>
@@ -270,18 +261,19 @@ function Chart_() {
     if (!canvas.current) return;
 
     const chartData = {
-      labels: data.tanggal || [],
+      labels: allDates || [],
       datasets: [
         {
           label: "Rencana",
-          data: groupBobotRencanaAkumulatifPerDateRangeMonth.flat(2),
+          data: groupBobotRencanaAkumulatifPerWorkDetail.flat(2),
           borderColor: "#dc3545",
           backgroundColor: "transparent",
           pointStyle: false,
         },
         {
           label: "Realisasi",
-          data: groupRelisasiAkumulatifPerDateRangeMonth.flat(2),
+          data: groupBobotAktualKumulatifPerWorkDetail.flat(2),
+
           borderColor: "#0d6efd",
           backgroundColor: "transparent",
           pointStyle: false,
@@ -400,4 +392,5 @@ function App() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(<App />);
