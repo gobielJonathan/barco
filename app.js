@@ -1,4 +1,13 @@
 function Table() {
+  const [baseWidth, setBaseWidth] = React.useState(1);
+
+  React.useEffect(() => {
+    const container = document.getElementById("info");
+    if (container) {
+      setBaseWidth(container.clientWidth);
+    }
+  }, []);
+
   return (
     <table class="table table-bordered sticky">
       <thead>
@@ -6,22 +15,34 @@ function Table() {
           <th
             rowspan="2"
             class="align-middle text-center fixed-col col-detail-label"
+            // style={{ width: (baseWidth * 80) / 100 / 5 }}
           >
             <div class="label">Detail Pekerjaan</div>
           </th>
           <th
             rowspan="2"
             class="align-middle text-center fixed-col col-detail-bobot"
+            style={
+              {
+                // width: (baseWidth * 20) / 100 / 4,
+                // left: (baseWidth * 80) / 100 / 5,
+              }
+            }
           >
             <div class="label">Bobot (%)</div>
           </th>
           {Object.keys(months).map((month) => (
-            <th class="text-center">{month}</th>
+            <th
+              class="text-center"
+              style={{ width: months[month].length * 55 }}
+            >
+              {month}
+            </th>
           ))}
         </tr>
         <tr>
           {Object.entries(months).map(([_, dateRange]) => (
-            <th>
+            <th class="grid-template">
               <tr
                 class="d-grid"
                 style={{
@@ -45,7 +66,7 @@ function Table() {
           <td class="fixed-col col-detail-label"></td>
           <td class="fixed-col col-detail-bobot"></td>
           {Object.entries(months).map(([_, dateRange]) => (
-            <td className="align-middle">
+            <td className="align-middle grid-template">
               <tr
                 class="d-grid"
                 style={{
@@ -74,7 +95,7 @@ function Table() {
               </div>
             </td>
             {groupBobotPerWorkDetail.at(detailIdx).map((detail) => (
-              <td>
+              <td class="grid-template">
                 <tr
                   class="d-grid"
                   style={{
@@ -103,7 +124,7 @@ function Table() {
             <div class="label">{totalBobot}%</div>
           </td>
           {groupBobotPerWorkDetail.at(0).map((detail) => (
-            <td>
+            <td class="grid-template">
               <tr
                 class="d-grid"
                 style={{
@@ -127,7 +148,7 @@ function Table() {
           </td>
           {Object.entries(groupBobotRencanaPerWorkDetail).map(
             ([_, percentages]) => (
-              <td>
+              <td class="grid-template">
                 <tr
                   class="d-grid"
                   style={{
@@ -153,7 +174,7 @@ function Table() {
           </td>
           {Object.entries(groupBobotRencanaAkumulatifPerWorkDetail).map(
             ([_, percentages]) => (
-              <td>
+              <td class="grid-template">
                 <tr
                   class="d-grid"
                   style={{
@@ -179,7 +200,7 @@ function Table() {
           </td>
           {Object.entries(groupBobotAktualRealisasiPerWorkDetail).map(
             ([_, percentages]) => (
-              <td>
+              <td class="grid-template">
                 <tr
                   class="d-grid"
                   style={{
@@ -205,7 +226,7 @@ function Table() {
           </td>
           {Object.entries(groupBobotAktualKumulatifPerWorkDetail).map(
             ([_, percentages]) => (
-              <td>
+              <td class="grid-template">
                 <tr
                   class="d-grid"
                   style={{
@@ -231,7 +252,7 @@ function Table() {
           </td>
 
           {Object.entries(deviasi).map(([_, percentages]) => (
-            <td>
+            <td class="grid-template">
               <tr
                 class="d-grid"
                 style={{
@@ -350,7 +371,7 @@ function App() {
   return (
     <div ref={container} class="container-md py-4">
       <div class="row">
-        <div class="col-5">
+        <div class="col-5" id="info">
           <img
             src="./logo.png"
             alt="logo"

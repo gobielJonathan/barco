@@ -3,8 +3,11 @@
 }
 
 table {
-  --label-width: 200px;
-  --bobot-width: 100%;
+  --label-col-width: 400px;
+  --bobot-col-width: 100px;
+
+  table-layout: fixed;
+  height: 100%;
 }
 
 table td,
@@ -23,25 +26,25 @@ table .fixed-col {
   z-index: 2;
 }
 
-table .col-detail-label {
+table th.col-detail-label {
   border-bottom: 0;
-  width: 25%;
+  width: var(--label-col-width);
 }
 
 table .col-detail-label .label {
   padding: 0.5rem;
-  width: var(--label-width);
+  width: var(--label-col-width);
   text-align: left;
 }
 
 table .col-detail-bobot {
-  left: 25%;
-  width: 18%;
+  width: var(--bobot-col-width);
+  left: var(--label-col-width);
 }
 
 table .col-detail-bobot .label {
   padding: 0.5rem;
-  width: var(--bobot-width);
+  width: var(--bobot-col-width);
 }
 
 table .col-bobot {
@@ -50,5 +53,22 @@ table .col-bobot {
 
 table .col-bobot .label {
   padding: 0.5rem;
-  width: calc(var(--bobot-width) + var(--label-width));
+}
+
+.grid-template {
+  padding: 0 !important;
+  vertical-align: middle;
+}
+.grid-template tr {
+  height: 100%;
+}
+
+.grid-template th:not(:last-child) {
+  padding: 5px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.grid-template td:not(:last-child) {
+  padding: 5px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
